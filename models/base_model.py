@@ -21,10 +21,6 @@ class BaseModel:
         return "[{}] ({}) {}".format(
                 self.__class__.__name__, self.id, self.__dict__)
 
-    def save(self):
-        '''a method that updates the updated_at inst'''
-        self.updated_at = datetime.now()
-
     def to_dict(self):
         ''' a method that returns a dic containg k/v pairs'''
         r = self.__dict__
@@ -36,3 +32,7 @@ class BaseModel:
             else:
                 r[key] = value
         return r
+
+    def save(self):
+        ''' updates public instance attribute updated_at'''
+        self.updated_at = datetime.now()
