@@ -2,7 +2,6 @@
 import unittest
 from datetime import datetime
 from models import base_model
-from models.base_model import BaseModel
 
 
 class test_BaseModel(unittest.TestCase):
@@ -22,16 +21,16 @@ class test_BaseModel(unittest.TestCase):
         self.assertTrue(hasattr(user, "updated_at"))
         self.assertTrue(hasattr(user, "id"))
         self.assertIsNotNone(user)
-        self.assertIsInstance(user, BaseModel)
+        self.assertIsInstance(user, base_model.BaseModel)
         user_dict = user.to_dict()
 
-        # to test if a BaseModel is initiated using kwargs
-        my_new_user = base_model.BaseModel(**user_dict)
-        self.assertTrue(hasattr(my_new_user, "created_at"))
-        self.assertTrue(hasattr(my_new_user, "updated_at"))
-        self.assertTrue(hasattr(my_new_user, "id"))
-        self.assertIsNotNone(user)
-        self.assertIsInstance(user, BaseModel)
+        # testig *args and **kwargs
+        new_user = base_model.BaseModel(**user_dict)
+        self.assertTrue(hasattr(new_user, "id"))
+        self.assertTrue(hasattr(new_user, "created_at"))
+        self.assertTrue(hasattr(new_user, "updated_at"))
+        self.assertIsNotNone(new_user)
+        self.assertIsInstance(new_user, base_model.BaseModel)
 
     def test_save(self):
         """
@@ -50,14 +49,16 @@ class test_BaseModel(unittest.TestCase):
         Unit test for the to_dict method of
         the BaseModel class
         """
-        user = BaseModel()
+        user = base_model.BaseModel()
         value_id = user.id
         value_created_at = user.created_at.isoformat()
         value_updated_at = user.updated_at.isoformat()
         value_class = user.__class__.__name__
-        mydict ={'id': value_id, 'created_at': value_created_at, 'updated_at': value_updated_at, '__class__': value_class}
+        mydict = {'id': value_id, 'created_at': value_created_at,
+                  'updated_at': value_updated_at, '__class__': value_class}
         actual_dict = user.to_dict()
         self.assertDictEqual(actual_dict, mydict)
+
 
 if __name__ == "__main__":
     unittest.main()
