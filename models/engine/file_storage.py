@@ -39,3 +39,8 @@ class FileStorage:
             for key in dicts.keys():
                 if BaseModel.__name__ == dicts[key]['__class__']:
                     FileStorage.__objects[key] = BaseModel(**dicts[key])
+
+        else:
+            with open(self.__file_path, "w", encoding='utf-8') as pathx:
+                json.dump({}, pathx)
+            self.reload()
