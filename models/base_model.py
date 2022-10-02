@@ -47,12 +47,8 @@ class BaseModel:
 
     def to_dict(self):
         ''' a method that returns a dic containg k/v pairs'''
-        r = self.__dict__
+        r = self.__dict__.copy()
         r['__class__'] = self.__class__.__name__
-
-        for key, value in self.__dict__.items():
-            if key in ('created_at', 'updated_at'):
-                r[key] = value.isoformat()
-            else:
-                r[key] = value
+        r['created_at'] = datetime.isoformat(self.created_at)
+        r['updated_at'] = datetime.isoformat(self.updated_at)
         return r
