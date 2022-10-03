@@ -31,7 +31,7 @@ class TestFileStorageInit(unittest.TestCase):
         self.assertEqual(type(models.storage), FileStorage)
 
 
-class test_FileStorage(unittest.TestCase):
+class test_storage(unittest.TestCase):
     '''file storage class definition'''
 
     def setUp(self):
@@ -60,6 +60,39 @@ class test_FileStorage(unittest.TestCase):
         self.assertIsNotNone(obj)
         self.assertEqual(type(obj), dict)
         self.assertIs(obj, storage._FileStorage__objects)
+
+    def test_save_create(self):
+        """ Save  """
+        obj = BaseModel()
+        obj_key = 'BaseModel' + '.' + obj.id
+
+        self.assertEqual(obj, storage.all()[obj_key])
+
+    def test_new_empty(self):
+        '''check new method'''
+        with self.assertRaises(TypeError):
+            storage.new()
+
+    def test_new_class(self):
+        '''check new method is valid'''
+        obj = BaseModel(id='123')
+        obj_key = 'BaseModel' + '.' + obj.id
+
+        self.assertEqual(storage.all(), {})
+        obj.id = 123
+        storage.new(obj)
+        self.assertEqual(obj, storage.all()[obj_key])
+
+    def test_reload(self):
+        '''check reload classes'''
+        obj - BaseModel()
+        obj_key = 'BaseModel' + '.' + obj.id
+        storage.save()
+        self.assertTrue(path.isfile('file.json'))
+        FileStorage._FileStorage__objects = {}
+        storage.reload()
+        self.assertTrue(obj_key in storage.all().keys())
+        self.assertEqual(obj.id, storage.all()[obj_key].id)
 
 
 if __name__ == "__main__":
