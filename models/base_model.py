@@ -25,14 +25,14 @@ class BaseModel:
                 if 'id' not in kwargs.keys():
                     self.id = str(uuid.uuid4())
                 if 'created_at' not in kwargs.keys():
-                    self.created_at = datetime.now()
+                    self.created_at = datetime.utcnow()
                 if 'updated_at' not in kwargs.keys():
-                    self.updated_at = datetime.now()
+                    self.updated_at = datetime.utcnow()
                 setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
             models.storage.new(self)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class BaseModel:
 
     def save(self):
         ''' updates public instance attribute updated_at'''
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         models.storage.save()
 
     def to_dict(self):
