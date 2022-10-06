@@ -43,6 +43,7 @@ class BaseModel:
     def save(self):
         ''' updates public instance attribute updated_at'''
         self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
         ''' a method that returns a dic containg k/v pairs'''
