@@ -5,7 +5,7 @@
 '''
 import uuid
 from datetime import datetime
-import storage
+import models
 
 
 class BaseModel:
@@ -33,7 +33,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         '''A method that describe class'''
@@ -43,7 +43,6 @@ class BaseModel:
     def save(self):
         ''' updates public instance attribute updated_at'''
         self.updated_at = datetime.utcnow()
-        storage.save()
 
     def to_dict(self):
         ''' a method that returns a dic containg k/v pairs'''
