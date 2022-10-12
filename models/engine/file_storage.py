@@ -14,6 +14,7 @@ class FileStorage:
     '''file storage class definition'''
     __file_path = "file.json"
     __objects = dict()
+    MODELS = [User, BaseModel]
 
     def new(self, obj):
         ''' a method that sets object with object keys'''
@@ -34,14 +35,13 @@ class FileStorage:
 
     def reload(self):
         ''' a method that deserializies the json file'''
-        MODELS = [BaseModel, User]
 
         if path.exists(FileStorage.__file_path) is True:
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
                 dicts = json.load(f)
 
             for key in dicts.keys():
-                for model in MODELS:
+                for model in FileStorage.MODELS:
                     if model.__name__ == dicts[key]["__class__"]:
                         FileStorage.__objects[key] = model(**dicts[key])
 
