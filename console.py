@@ -4,13 +4,17 @@ import cmd
 import models
 from models.base_model import BaseModel
 from models.user import User
-
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     '''command processor class definition'''
 
     prompt = '(hbnb)'
-    MODELS = [BaseModel, User]
+    MODELS = [BaseModel, User, Place, State, City, Amenity, Review]
 
     def do_create(self, line):
         '''creates a new instance of BaseModel saves it and prints the id'''

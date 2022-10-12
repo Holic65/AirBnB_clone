@@ -7,6 +7,11 @@ import json
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from os import path
 
 
@@ -14,7 +19,7 @@ class FileStorage:
     '''file storage class definition'''
     __file_path = "file.json"
     __objects = dict()
-    MODELS = [User, BaseModel]
+    MODELS = [User, BaseModel, Place, State, City, Amenity, Review]
 
     def new(self, obj):
         ''' a method that sets object with object keys'''
